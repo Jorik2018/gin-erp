@@ -1,18 +1,17 @@
-package handler
+package handlers
 
 import (
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/Jorik2018/gin-erp/dao"
+	"github.com/Jorik2018/gin-erp/models"
 	"github.com/Jorik2018/gin-erp/repository"
 )
 
-//StudentPostHandler - handle student post request
-func StudentPostHandler(c *gin.Context) {
+func StudentPost(c *gin.Context) {
 	studentRepo := repository.GetStudentRepository()
-	var student dao.Student
+	var student models.Student
 	if err := c.ShouldBindJSON(&student); err == nil {
 		_, err = studentRepo.Insert(student)
 		if err != nil {
@@ -25,8 +24,7 @@ func StudentPostHandler(c *gin.Context) {
 	}
 }
 
-//StudentGetHandler - handle student get request
-func StudentGetHandler(c *gin.Context) {
+func StudentGet(c *gin.Context) {
 	studentRepo := repository.GetStudentRepository()
 	students, err := studentRepo.Select()
 	if err != nil {
@@ -36,10 +34,9 @@ func StudentGetHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, convertListToArray(students))
 }
 
-//StudentPutHandler - handle student put request
-func StudentPutHandler(c *gin.Context) {
+func StudentPut(c *gin.Context) {
 	studentRepo := repository.GetStudentRepository()
-	var student dao.Student
+	var student models.Student
 	if err := c.ShouldBindJSON(&student); err == nil {
 		_, err = studentRepo.Update(student)
 		if err != nil {
@@ -52,10 +49,9 @@ func StudentPutHandler(c *gin.Context) {
 	}
 }
 
-//StudentDeleteHandler - handle student delete request
-func StudentDeleteHandler(c *gin.Context) {
+func StudentDelete(c *gin.Context) {
 	studentRepo := repository.GetStudentRepository()
-	var student dao.Student
+	var student models.Student
 	student.StudentID, _ = strconv.Atoi(c.Param("id"))
 	_, err := studentRepo.Remove(student)
 	if err != nil {

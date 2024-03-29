@@ -1,4 +1,4 @@
-package dao
+package models
 
 //Book - book dao
 type Book struct {

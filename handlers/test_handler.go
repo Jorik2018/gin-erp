@@ -1,3 +1,12 @@
+package handlers
+
+import (
+    "net/http"
+    "log"
+    "fmt"
+	"github.com/gin-gonic/gin"
+)
+
 type StructA struct {
     FieldA string `form:"field_a"`
 }
@@ -19,7 +28,7 @@ type StructD struct {
     FieldD string `form:"field_d"`
 }
 
-func hello(c *gin.Context) {
+func Hello(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{"data": "hello world"})    
 }
 
@@ -50,13 +59,13 @@ func GetDataD(c *gin.Context) {
     })
 }
 
-func ping(c *gin.Context) {
-	c.JSON(ttp.StatusOK, gin.H{
+func Ping(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
 		"message": "pong",
 	})
 }
 
-func someJSON(c *gin.Context) {
+func JSON(c *gin.Context) {
 	data := map[string]interface{}{
 		"lang": "GO语言",
 		"tag":  "<br>",
@@ -65,7 +74,7 @@ func someJSON(c *gin.Context) {
 	c.AsciiJSON(http.StatusOK, data)
 }
 
-func upload(c *gin.Context) {
+func Upload(c *gin.Context) {
 	// Multipart form
 	form, _ := c.MultipartForm()
 	files := form.File["upload[]"]
@@ -74,7 +83,7 @@ func upload(c *gin.Context) {
 		log.Println(file.Filename)
 
 		// Upload the file to specific dst.
-		c.SaveUploadedFile(file, dst)
+		c.SaveUploadedFile(file, "dst")
 	}
 	c.String(http.StatusOK, fmt.Sprintf("%d files uploaded!", len(files)))
 }

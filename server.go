@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
-	"github.com/Jorik2018/gin-erp/handler"
+	"github.com/Jorik2018/gin-erp/handlers"
 	"github.com/Jorik2018/gin-erp/repository"
 )
 
@@ -21,26 +21,24 @@ func main() {
 	router := gin.Default()
 	router.Use(gzip.Gzip(gzip.DefaultCompression))
 
-	router.GET("/book", handler.BookGetHandler)
-	router.POST("/book", handler.BookPostHandler)
-	router.PUT("/book", handler.BookPutHandler)
-	router.DELETE("/book/:id", handler.BookDeleteHandler)
+	router.GET("/book", handlers.BookGet)
+	router.POST("/book", handlers.BookPost)
+	router.PUT("/book", handlers.BookPut)
+	router.DELETE("/book/:id", handlers.BookDelete)
 
-	router.GET("/student", handler.StudentGetHandler)
-	router.POST("/student", handler.StudentPostHandler)
-	router.PUT("/student", handler.StudentPutHandler)
-	router.DELETE("/student/:id", handler.StudentDeleteHandler)
+	router.GET("/student", handlers.StudentGet)
+	router.POST("/student", handlers.StudentPost)
+	router.PUT("/student", handlers.StudentPut)
+	router.DELETE("/student/:id", handlers.StudentDelete)
 
-
-
-	router.GET("/ping", handler.ping)
-	router.GET("/someJSON", handler.someJSON)
-    router.GET("/getb", handler.GetDataB)
-    router.GET("/getc", handler.GetDataC)
-    router.GET("/getd", handler.GetDataD)
-	router.GET("/hello", handler.hello)
+	router.GET("/ping", handlers.Ping)
+	router.GET("/someJSON", handlers.JSON)
+    router.GET("/getb", handlers.GetDataB)
+    router.GET("/getc", handlers.GetDataC)
+    router.GET("/getd", handlers.GetDataD)
+	router.GET("/hello", handlers.Hello)
 	router.MaxMultipartMemory = 8 << 20  // 8 MiB
-	router.POST("/upload", handler.upload)
+	router.POST("/upload", handlers.Upload)
 
-	router.Run(":8080")
+	router.Run(":7000")
 }

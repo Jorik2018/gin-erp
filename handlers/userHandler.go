@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"encoding/json"
 
-	c "github.com/Jorik2018/go_crud/commons"
+	c "github.com/Jorik2018/gin-erp/models"
 )
 
 func GetHandler(db *sql.DB) (func(w http.ResponseWriter, r *http.Request)){

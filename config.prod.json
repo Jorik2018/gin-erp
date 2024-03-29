@@ -3,5 +3,5 @@
     "mysql-password": "123",
     "db-name": "library",
     "host": "db",
-    "port":3306
+    "port":5432
   }

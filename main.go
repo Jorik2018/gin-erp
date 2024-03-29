@@ -2,14 +2,15 @@ package main
 
 import (
 	"gorm.io/gorm"
-	"gorm.io/driver/mysql"
-	
+	//"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
 
-	_ "github.com/go-sql-driver/mysql"
+	//_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 
 	"github.com/Jorik2018/go_crud/handlers"
 	"github.com/Jorik2018/go_crud/commons"
@@ -23,15 +24,13 @@ const (
 	dbName     = "production"
 )
 
-
-
 func main() {
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", dbUser, dbPassword, dbHost, dbPort, dbName)
 	db, err := sql.Open("mysql", dsn)
 	
 	if err != nil {
-		log.Fatal(err)
+		
 	}
 	defer db.Close()
 	if err := db.Ping(); err != nil {

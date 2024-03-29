@@ -1,16 +1,15 @@
-package handler
+package handlers
 
 import (
 	"net/http"
 	"strconv"
-
 	"github.com/gin-gonic/gin"
-	"github.com/Jorik2018/gin-erp/dao"
+	"github.com/Jorik2018/gin-erp/models"
 	"github.com/Jorik2018/gin-erp/repository"
 )
 
 //BookGetHandler - handle book get requests
-func BookGetHandler(c *gin.Context) {
+func BookGet(c *gin.Context) {
 	bookRepo := repository.GetBookRepository()
 	books, err := bookRepo.Select()
 	if err != nil {
@@ -20,11 +19,10 @@ func BookGetHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, convertListToArray(books))
 }
 
-//BookPostHandler - handle book post requests
-func BookPostHandler(c *gin.Context) {
+func BookPost(c *gin.Context) {
 	bookRepo := repository.GetBookRepository()
 
-	var book dao.Book
+	var book models.Book
 	if err := c.ShouldBindJSON(&book); err == nil {
 		_, err = bookRepo.Insert(book)
 		if err != nil {
@@ -37,10 +35,9 @@ func BookPostHandler(c *gin.Context) {
 	}
 }
 
-//BookPutHandler - handle book put requests
-func BookPutHandler(c *gin.Context) {
+func BookPut(c *gin.Context) {
 	bookRepo := repository.GetBookRepository()
-	var book dao.Book
+	var book models.Book
 	if err := c.ShouldBindJSON(&book); err == nil {
 		_, err = bookRepo.Update(book)
 		if err != nil {
@@ -54,9 +51,9 @@ func BookPutHandler(c *gin.Context) {
 }
 
 //BookDeleteHandler - handle book delete requests
-func BookDeleteHandler(c *gin.Context) {
+func BookDelete(c *gin.Context) {
 	bookRepo := repository.GetBookRepository()
-	var book dao.Book
+	var book models.Book
 	book.BookID, _ = strconv.Atoi(c.Param("id"))
 	_, err := bookRepo.Remove(book)
 	if err != nil {
