@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"log"
 
-	util "github.com/lakshanwd/db-helper/mysql"
-	"github.com/lakshanwd/go-crud/dao"
+	util "github.com/Jorik2018/db-helper/mysql"
+	"github.com/Jorik2018/gin-erp/dao"
 )
 
 //StudentRepo - Student repository

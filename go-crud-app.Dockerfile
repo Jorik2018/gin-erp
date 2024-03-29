@@ -1,7 +1,7 @@
 FROM golang:latest
 
 #setup working directory
-WORKDIR /go/src/github.com/lakshanwd/go-crud
+WORKDIR /go/src/github.com/Jorik2018/gin-erp
 
 #copy files
 COPY dao ./dao
@@ -17,7 +17,7 @@ RUN go get -d -v ./... && go install -v ./...
 COPY config.prod.json ./config.json
 
 #run executable
-CMD ["go-crud"]
+CMD ["gin-erp"]
 
 #expose port
 EXPOSE 8080

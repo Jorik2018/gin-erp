@@ -3,29 +3,29 @@ version: '3.1'
 services:
 
   web:
-    container_name: go-crud-api
+    container_name: gin-erp-api
     build:
       context: .
-      dockerfile: go-crud-app.Dockerfile
+      dockerfile: gin-erp-app.Dockerfile
     ports:
       - 8080:8080
     environment:
       GIN_MODE: release
     networks: 
-      - go-crud-network
+      - gin-erp-network
     depends_on:
       - db
     links:
       - db
 
   db:
-    container_name: go-crud-db
+    container_name: gin-erp-db
     restart: always
     networks:
-      - go-crud-network
+      - gin-erp-network
     build:
       context: .
-      dockerfile: go-crud-db.Dockerfile
+      dockerfile: gin-erp-db.Dockerfile
     environment:
       MYSQL_ROOT_PASSWORD: 123
       MYSQL_DATABASE: library
@@ -40,4 +40,4 @@ volumes:
   db-data:
 
 networks:
-  go-crud-network:
+  gin-erp-network:

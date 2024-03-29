@@ -4,7 +4,7 @@ import (
 	"container/list"
 	"database/sql"
 
-	"github.com/lakshanwd/go-crud/db"
+	"github.com/Jorik2018/gin-erp/db"
 )
 
 //Repo - abstract repository interface

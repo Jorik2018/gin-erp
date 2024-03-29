@@ -1,7 +1,7 @@
 {
-    "mysql-user": "developer",
-    "mysql-password": "123",
-    "db-name": "library",
-    "host": "localhost",
+    "mysql-user": "supersgtii",
+    "mysql-password": "A1_supabase",
+    "db-name": "test",
+    "host": "190.119.114.163",
     "port":3306
-  }
+}

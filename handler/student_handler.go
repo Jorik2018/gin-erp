@@ -5,8 +5,8 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lakshanwd/go-crud/dao"
-	"github.com/lakshanwd/go-crud/repository"
+	"github.com/Jorik2018/gin-erp/dao"
+	"github.com/Jorik2018/gin-erp/repository"
 )
 
 //StudentPostHandler - handle student post request
