@@ -3,6 +3,7 @@ package repository
 import (
 	"container/list"
 	_ "database/sql"
+	"reflect"
 	//"log"
 
 	//util "github.com/Jorik2018/db-helper/mysql"
@@ -20,11 +21,26 @@ func GetBookRepository() BookRepo {
 	return BookRepo{Name: "tbl_book"}
 }
 
+// func toList(slice interface{}) *list.List {
+//     sliceValue := slice.([]interface{})
+//     bookList := list.New()
+//     for _, item := range sliceValue {
+//         bookList.PushBack(item)
+//     }
+//     return bookList
+// }
+
 func toList(slice interface{}) *list.List {
-    sliceValue := slice.([]interface{})
+    sliceValue := reflect.ValueOf(slice)
+
+    // Ensure sliceValue is a slice
+    if sliceValue.Kind() != reflect.Slice {
+        panic("toList: input is not a slice")
+    }
+
     bookList := list.New()
-    for _, item := range sliceValue {
-        bookList.PushBack(item)
+    for i := 0; i < sliceValue.Len(); i++ {
+        bookList.PushBack(sliceValue.Index(i).Interface())
     }
     return bookList
 }
@@ -51,8 +67,9 @@ func (repo BookRepo) Find(id string) (models.Book, error) {
 }
 
 //Insert - Insert books to db
-func (repo BookRepo) Insert(doc interface{}) (int64, error) {
-	return 0, nil
+func (repo BookRepo) Insert(book *models.Book) (int64, error) {
+  	result := db.ORM.Create(&book)
+	return 0, result.Error
 	// book := doc.(dao.Book)
 	// return util.ExecuteInsert(DbConnection, "insert into tbl_book(book_name, book_author) values (?,?)", book.BookName, book.Author)
 }

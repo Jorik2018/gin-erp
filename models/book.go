@@ -1,8 +1,11 @@
 package models
 
-//Book - book dao
+import (
+	"gorm.io/gorm"
+)
+
 type Book struct {
-	BookID   int    `json:"bookID,omitempty"`
-	BookName string `json:"bookName,omitempty"`
-	Author   string `json:"author,omitempty"`
+	gorm.Model
+	Name 	string `json:"name,omitempty" gorm:"not null" binding:"required"`
+	Author 	string `json:"author,omitempty" gorm:"not null" binding:"required"`
 }

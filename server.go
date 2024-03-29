@@ -21,10 +21,7 @@ func main() {
 	router := gin.Default()
 	router.Use(gzip.Gzip(gzip.DefaultCompression))
 
-	router.GET("/book", handlers.BookGet)
-	router.POST("/book", handlers.BookPost)
-	router.PUT("/book", handlers.BookPut)
-	router.DELETE("/book/:id", handlers.BookDelete)
+	handlers.NewBookHandler().SetupRoutes(router)
 
 	router.GET("/student", handlers.StudentGet)
 	router.POST("/student", handlers.StudentPost)

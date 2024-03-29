@@ -52,7 +52,8 @@ func StudentPut(c *gin.Context) {
 func StudentDelete(c *gin.Context) {
 	studentRepo := repository.GetStudentRepository()
 	var student models.Student
-	student.StudentID, _ = strconv.Atoi(c.Param("id"))
+	idInt, _ := strconv.Atoi(c.Param("id"))
+    student.ID = uint(idInt)
 	_, err := studentRepo.Remove(student)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())

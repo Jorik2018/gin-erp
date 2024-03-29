@@ -8,8 +8,14 @@ import (
 	"github.com/Jorik2018/gin-erp/repository"
 )
 
-//BookGetHandler - handle book get requests
-func BookGet(c *gin.Context) {
+type BookHandler struct {
+}
+
+func NewBookHandler() *BookHandler {
+    return &BookHandler{}
+}
+
+func (h *BookHandler) get(c *gin.Context) {
 	bookRepo := repository.GetBookRepository()
 	books, err := bookRepo.Select()
 	if err != nil {
@@ -19,12 +25,21 @@ func BookGet(c *gin.Context) {
 	c.JSON(http.StatusOK, convertListToArray(books))
 }
 
-func BookPost(c *gin.Context) {
+func (h *BookHandler) list(c *gin.Context) {
 	bookRepo := repository.GetBookRepository()
+	books, err := bookRepo.Select()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, convertListToArray(books))
+}
 
+func (h *BookHandler) Post(c *gin.Context) {
+	bookRepo := repository.GetBookRepository()
 	var book models.Book
 	if err := c.ShouldBindJSON(&book); err == nil {
-		_, err = bookRepo.Insert(book)
+		_, err = bookRepo.Insert(&book)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err.Error())
 			return
@@ -35,7 +50,7 @@ func BookPost(c *gin.Context) {
 	}
 }
 
-func BookPut(c *gin.Context) {
+func put(c *gin.Context) {
 	bookRepo := repository.GetBookRepository()
 	var book models.Book
 	if err := c.ShouldBindJSON(&book); err == nil {
@@ -51,14 +66,24 @@ func BookPut(c *gin.Context) {
 }
 
 //BookDeleteHandler - handle book delete requests
-func BookDelete(c *gin.Context) {
+func delete(c *gin.Context) {
 	bookRepo := repository.GetBookRepository()
 	var book models.Book
-	book.BookID, _ = strconv.Atoi(c.Param("id"))
+	idInt, _ := strconv.Atoi(c.Param("id"))
+    book.ID = uint(idInt)
 	_, err := bookRepo.Remove(book)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
 	c.JSON(http.StatusOK, true)
+}
+
+
+func (h *BookHandler) SetupRoutes(router *gin.Engine) {
+	router.GET("/api/book", h.list)
+	router.GET("/api/book/:id", h.get)
+	router.POST("/api/book", h.Post)
+	router.PUT("/api/book/:id", put)
+	router.DELETE("/api/book/:id", delete)
 }

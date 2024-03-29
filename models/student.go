@@ -1,14 +1,16 @@
 package models
 
-//Student - student dao
+import (
+	"gorm.io/gorm"
+)
+	
 type Student struct {
-	StudentID int      `json:"studentID,omitempty"`
+	gorm.Model
 	Name      string   `json:"name,omitempty"`
 	Age       int      `json:"age,omitempty"`
-	Address   *Address `json:"address,omitempty"`
+	Address   *Address `json:"address,omitempty" gorm:"embedded"`
 }
 
-//Address - address dao
 type Address struct {
 	StreetAddress  string `json:"streetAddress,omitempty"`
 	StreetAddress2 string `json:"streetAddress2,omitempty"`

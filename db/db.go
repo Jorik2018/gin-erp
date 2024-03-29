@@ -49,8 +49,10 @@ func GetDatabase() (*sql.DB, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	orm.Debug()
 	orm.AutoMigrate(&models.Product{})
 	orm.AutoMigrate(&models.Book{})
+	orm.AutoMigrate(&models.Student{})
 	
 	ORM = orm
 	return db, err
