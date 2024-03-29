@@ -60,10 +60,8 @@ func (repo BookRepo) Select() (*list.List, error) {
 
 func (repo BookRepo) Find(id string) (models.Book, error) {
     var book models.Book
-    if err := db.ORM.Where("id = ?", id).First(&book).Error; err != nil {
-        return book, err
-    }
-    return book, nil
+	result := db.ORM.First(&book, id)
+    return book, result.Error
 }
 
 //Insert - Insert books to db

@@ -17,12 +17,12 @@ func NewBookHandler() *BookHandler {
 
 func (h *BookHandler) get(c *gin.Context) {
 	bookRepo := repository.GetBookRepository()
-	books, err := bookRepo.Select()
+	book, err := bookRepo.Find(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, convertListToArray(books))
+	c.JSON(http.StatusOK, book)
 }
 
 func (h *BookHandler) list(c *gin.Context) {
